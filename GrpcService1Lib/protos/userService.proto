@@ -1,0 +1,93 @@
+﻿syntax = "proto3";
+
+package GrpcService1;
+
+// 用户服务
+service User {
+
+	// 获取用户列表
+	rpc GetList (GetListRequest) returns (GetListResponse) {
+	}
+
+	// 获取单个用户
+	rpc Get (GetRequest) returns (GetResponse) {
+	}
+
+	// 删除用户
+	rpc Remove (RemoveRequest) returns (RemoveResponse) {
+	}
+}
+
+// 获取用户列表请求参数
+message GetListRequest {
+
+}
+
+// 获取单个用户请求参数
+message GetRequest {
+
+	// 用户id
+	string user_id = 1 ;
+}
+
+// 删除用户请求参数
+message RemoveRequest {
+
+	// 用户id
+	string user_id = 1 ;
+}
+
+// 获取用户列表返回值
+message GetListResponse {
+
+	// 状态码
+	int32 code = 1;
+
+	// 错误信息
+	string message = 2;
+
+	// 用户列表
+	repeated UserModel Data = 3;
+}
+
+// 获取单个用户返回值
+message GetResponse {
+
+	// 状态码
+	int32 code = 1;
+
+	// 错误信息
+	string message = 2;
+
+	// 用户
+	UserModel Data = 3;
+}
+
+// 删除用户用户返回值
+message RemoveResponse {
+
+	// 状态码
+	int32 code = 1;
+
+	// 错误信息
+	string message = 2;
+
+	// 删除结果
+	bool Data = 3;
+}
+
+// 用户实体
+message UserModel {
+
+    // 用户id
+	string user_id = 1;
+
+	// 用户名
+	string user_name=2;
+}
+
+
+
+
+
+
