@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace WebAPIService1.Controllers
@@ -38,6 +42,27 @@ namespace WebAPIService1.Controllers
                 return user;
             }
             return null;
+        }
+
+        [HttpPost]
+        public async Task<bool> Add([FromBody]UserModel request)
+        {
+            HttpClient httpClient = new HttpClient();
+
+            var jObject = new JObject();
+            jObject.Add("userId", "userId" + DateTime.Now);
+            jObject.Add("userName", "userName" + DateTime.Now);
+
+            var str = new StringContent(JsonConvert.SerializeObject(jObject), Encoding.UTF8, "application/json");
+
+            var response = await httpClient.PostAsync($"{WebApiService2Url}/user/add", str);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                var flag = JsonConvert.DeserializeObject<bool>(result);
+                return flag;
+            }
+            return false;
         }
     }
 
