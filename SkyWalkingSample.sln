@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIService1", "WebAPIService1\WebAPIService1.csproj", "{9406AE1B-10A1-4023-93DD-728B78270467}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIService1", "WebAPIService1\WebAPIService1.csproj", "{9406AE1B-10A1-4023-93DD-728B78270467}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPIService2", "WebAPIService2\WebAPIService2.csproj", "{E27738B3-6AE4-4E60-8323-240A2CDB6631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPIService2", "WebAPIService2\WebAPIService2.csproj", "{E27738B3-6AE4-4E60-8323-240A2CDB6631}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcService1", "GrpcService1\GrpcService1.csproj", "{F974D38A-514E-4EB8-925B-30E963EA66DF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcService1", "GrpcService1\GrpcService1.csproj", "{F974D38A-514E-4EB8-925B-30E963EA66DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcService1Lib", "GrpcService1Lib\GrpcService1Lib.csproj", "{80CB229D-D719-4A26-8F0C-6A3A8FDF54C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcService1Lib", "GrpcService1Lib\GrpcService1Lib.csproj", "{80CB229D-D719-4A26-8F0C-6A3A8FDF54C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

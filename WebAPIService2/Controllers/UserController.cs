@@ -4,6 +4,7 @@ using GrpcService1;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebAPIService2.Models;
 using static GrpcService1.User;
 
 namespace WebAPIService2.Controllers
@@ -14,10 +15,12 @@ namespace WebAPIService2.Controllers
     {
         private readonly UserClient _userClient;
         private readonly IMapper _mapper;
+        private readonly AppDbContext _dbContext;
 
-        public UserController(IMapper mapper)
+        public UserController(IMapper mapper, AppDbContext appDbContext)
         {
             _mapper = mapper;
+            _dbContext = appDbContext;
             _userClient = new UserClient(new Channel("127.0.0.1:5051", ChannelCredentials.Insecure)); // 实际上Channel不能每次都创建
         }
 
@@ -47,6 +50,23 @@ namespace WebAPIService2.Controllers
                 return user;
             }
             return null;
+        }
+
+        [HttpPost]
+        public async Task<bool> Add([FromBody]UserModel request)
+        {
+            try
+            {
+                var user = _mapper.Map<Models.User>(request);
+                await _dbContext.Users.AddAsync(user);
+                var count = await _dbContext.SaveChangesAsync();
+                return count > 0;
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex);
+            }
+            return false;
         }
     }
 

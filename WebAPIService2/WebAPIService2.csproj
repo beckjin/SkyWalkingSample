@@ -12,7 +12,10 @@
     <PackageReference Include="AutoMapper" Version="7.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="5.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
     <PackageReference Include="SkyWalking.AspNetCore" Version="0.3.0" />
+    <PackageReference Include="SkyWalking.Diagnostics.EntityFrameworkCore.Pomelo.MySql" Version="0.3.0" />
   </ItemGroup>
 
   <ItemGroup>
