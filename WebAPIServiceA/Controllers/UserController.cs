@@ -14,16 +14,17 @@ namespace WebAPIService1.Controllers
     {
         private const string WebApiServiceBUrl = "http://localhost:5001";
 
-        private readonly HttpClient _httpClient;
-        public UserController(HttpClient httpClient)
+        private readonly IHttpClientFactory _httpClientFactory;
+        public UserController(IHttpClientFactory httpClientFactory)
         {
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
         }
 
         [HttpGet]
         public async Task<List<UserModel>> GetList()
         {
-            var response = await _httpClient.GetAsync($"{WebApiServiceBUrl}/user/getList");
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"{WebApiServiceBUrl}/user/getList");
             if (response.IsSuccessStatusCode)
             {
                 var str = await response.Content.ReadAsStringAsync();
@@ -35,7 +36,8 @@ namespace WebAPIService1.Controllers
         [HttpGet]
         public async Task<UserModel> Get(string userId)
         {
-            var response = await _httpClient.GetAsync($"{WebApiServiceBUrl}/user/get?useId={userId}");
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.GetAsync($"{WebApiServiceBUrl}/user/get?useId={userId}");
             if (response.IsSuccessStatusCode)
             {
                 var str = await response.Content.ReadAsStringAsync();
@@ -53,7 +55,8 @@ namespace WebAPIService1.Controllers
                 UserName = "userName" + DateTime.Now
             }), Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{WebApiServiceBUrl}/user/add", content);
+            var client = _httpClientFactory.CreateClient();
+            var response = await client.PostAsync($"{WebApiServiceBUrl}/user/add", content);
 
             if (response.IsSuccessStatusCode)
             {
