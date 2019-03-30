@@ -1,0 +1,10 @@
+{
+  "SkyWalking": {
+    "ServiceName": "WebAPIService_NetFramework",
+    "Transport": {
+      "gRPC": {
+        "Servers": "localhost:11800"
+      }
+    }
+  }
+}
