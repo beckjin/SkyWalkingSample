@@ -1,52 +1,68 @@
-﻿using Grpc.Core;
-using System;
+﻿using AutoMapper;
+using Grpc.Core;
+using GrpcService.Repositories;
+using GrpcService.Repositories.EF;
 using System.Threading.Tasks;
 
 namespace GrpcService1
 {
-    public class UserImpl: User.UserBase
+    public class UserImpl : User.UserBase
     {
-        public override Task<GetListResponse> GetList(GetListRequest request, ServerCallContext context)
-        {
-            var users = new Google.Protobuf.Collections.RepeatedField<UserModel>()
-            {
-                new UserModel()
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    UserName = "James"
-                },
-                new UserModel()
-                {
-                    UserId = Guid.NewGuid().ToString(),
-                    UserName = "Beck"
-                }
-            };
+        private readonly IUserRepository _userRepository;
+        private readonly AppDbContext _dbContext;
+        private readonly IMapper _mapper;
 
-            var response = new GetListResponse();
-            response.Code = 1000;
+        public UserImpl(IUserRepository userRepository, AppDbContext appDbContext, IMapper mapper)
+        {
+            _userRepository = userRepository;
+            _dbContext = appDbContext;
+            _mapper = mapper;
+        }
+
+        public override async Task<GetListResponse> GetList(GetListRequest request, ServerCallContext context)
+        {
+            await new UserRepository(_dbContext, _mapper).GetListAsync();
+
+            var users = await _userRepository.GetListAsync();
+            var response = new GetListResponse
+            {
+                Code = 1000
+            };
             response.Data.AddRange(users);
-
-            return Task.FromResult(response);
+            return response;
         }
 
-        public override Task<GetResponse> Get(GetRequest request, ServerCallContext context)
+        public override async Task<GetResponse> Get(GetRequest request, ServerCallContext context)
         {
-            var response = new GetResponse();
-            response.Code = 1000;
-            response.Data = new UserModel()
+            var user = await _userRepository.GetAsync(request.UserId);
+
+            return new GetResponse
             {
-                UserId = Guid.NewGuid().ToString(),
-                UserName = "Mark"
+                Code = 1000,
+                Data = user
             };
-            return Task.FromResult(response);
         }
 
-        public override Task<RemoveResponse> Remove(RemoveRequest request, ServerCallContext context)
+        public override async Task<boolResponse> Remove(RemoveRequest request, ServerCallContext context)
         {
-            var response = new RemoveResponse();
-            response.Code = 1000;
-            response.Data = true;
-            return Task.FromResult(response);
+            var result = await _userRepository.RemoveAsync(request.UserId);
+
+            return new boolResponse
+            {
+                Code = 1000,
+                Data = result
+            };
+        }
+
+        public override async Task<boolResponse> Add(AddRequest request, ServerCallContext context)
+        {
+            var result = await _userRepository.AddAsync(request.UserId, request.UserName);
+
+            return new boolResponse
+            {
+                Code = 1000,
+                Data = result
+            };
         }
     }
 }

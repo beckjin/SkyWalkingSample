@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
-using WebAPIService2.Controllers;
-using WebAPIService2.Models;
+using WebAPIServiceB.Models;
 
 namespace WebAPIService2.Mappers
 {
@@ -8,7 +7,7 @@ namespace WebAPIService2.Mappers
     {
         public UserProfile()
         {
-            CreateMap<UserModel, User>();
+            CreateMap<GrpcService1.UserModel, UserModel>();
         }
     }
 }

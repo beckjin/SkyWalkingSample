@@ -14,7 +14,11 @@ service User {
 	}
 
 	// 删除用户
-	rpc Remove (RemoveRequest) returns (RemoveResponse) {
+	rpc Remove (RemoveRequest) returns (boolResponse) {
+	}
+
+	// 添加用户
+	rpc Add (AddRequest) returns (boolResponse) {
 	}
 }
 
@@ -35,6 +39,16 @@ message RemoveRequest {
 
 	// 用户id
 	string user_id = 1 ;
+}
+
+// 添加用户
+message AddRequest {
+
+	// 用户id
+	string user_id = 1;
+
+	// 用户名
+	string user_name = 2;
 }
 
 // 获取用户列表返回值
@@ -63,8 +77,7 @@ message GetResponse {
 	UserModel Data = 3;
 }
 
-// 删除用户用户返回值
-message RemoveResponse {
+message boolResponse {
 
 	// 状态码
 	int32 code = 1;

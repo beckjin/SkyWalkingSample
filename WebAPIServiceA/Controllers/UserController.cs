@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPIServiceA.Models;
 
 namespace WebAPIService1.Controllers
 {
@@ -34,10 +35,10 @@ namespace WebAPIService1.Controllers
         }
 
         [HttpGet]
-        public async Task<UserModel> Get(string userId)
+        public async Task<UserModel> Get([FromQuery]string userId)
         {
             var client = _httpClientFactory.CreateClient();
-            var response = await client.GetAsync($"{WebApiServiceBUrl}/user/get?useId={userId}");
+            var response = await client.GetAsync($"{WebApiServiceBUrl}/user/get?userId={userId}");
             if (response.IsSuccessStatusCode)
             {
                 var str = await response.Content.ReadAsStringAsync();
@@ -51,8 +52,8 @@ namespace WebAPIService1.Controllers
         {
             var content = new StringContent(JsonConvert.SerializeObject(new
             {
-                UserId = "userId" + DateTime.Now,
-                UserName = "userName" + DateTime.Now
+                UserId = request.UserId,
+                UserName = request.UserName
             }), Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
@@ -65,13 +66,5 @@ namespace WebAPIService1.Controllers
             }
             return false;
         }
-    }
-
-
-    public class UserModel
-    {
-        public string UserId { get; set; }
-
-        public string UserName { get; set; }
     }
 }
